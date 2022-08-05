@@ -39,7 +39,7 @@
   time.timeZone = "America/New_York";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.utf8";
+  i18n.defaultLocale = "en_US.UTF-8";
 
   # GUI Setup
   services.xserver = {
@@ -52,6 +52,7 @@
 
     # Enable KDE Plasma Desktop Enviornment
     displayManager.sddm.enable = true;
+    displayManager.sddm.autoNumlock = true;
     desktopManager.plasma5.enable = true;
   };
 
@@ -59,14 +60,13 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    jack.enable = true;
   };
 
   # User Accounts
@@ -85,6 +85,26 @@
       # Allow to change network settings and use sudo
       extraGroups = [ "networkmanager" "wheel" ];
     };
+  };
+
+  nix = {
+    # Nix Package Manager settings
+    settings = {
+      # Optimise syslinks
+      auto-optimise-store = true;
+    };
+    gc = {
+      # Automatic garbage collection
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+    # Enable nixFlakes on system
+    extraOptions = ''
+      experimental-features = nix-command flakes
+      keep-outputs          = true
+      keep-derivations      = true
+    '';
   };
 
   # Allow unfree packages
@@ -107,4 +127,22 @@
   # Create X11 font directory so VSCode can find new fonts
   # https://nixos.wiki/wiki/Fonts#What_font_names_can_be_used_in_fonts.fontconfig.defaultFonts.monospace.3F
   fonts.fontDir.enable = true;
+
+  # Add Steam
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
+
+  # Games SMB Share
+  fileSystems."/home/npalmer/.local/share/Steam/games" = {
+      device = "//192.168.1.100/games";
+      fsType = "cifs";
+      options = let
+        # this line prevents hanging on network split
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+
+      in ["${automount_opts},credentials=/etc/nixos/smb-secrets,uid=1000,gid=100,dir_mode=0777,file_mode=0777"];
+  };
 }
