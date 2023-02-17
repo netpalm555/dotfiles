@@ -47,7 +47,13 @@ let
     inherit system pkgs pkgs-stable;
     inherit (pkgs) config lib stdenv;
   };
+
+  laptopConf = import ./laptop {
+    inherit system pkgs pkgs-stable;
+    inherit (pkgs) config lib stdenv;
+  };
 in
 {
   npalmer-desktop = mkHome desktopConf;
+  npalmer-laptop = mkHome laptopConf;
 }
