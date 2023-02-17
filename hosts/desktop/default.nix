@@ -83,7 +83,7 @@
       description = "Nathan Palmer";
 
       # Allow to change network settings and use sudo
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" "davfs2" ];
     };
   };
 
@@ -137,12 +137,27 @@
 
   # Games SMB Share
   fileSystems."/home/npalmer/.local/share/Steam/games" = {
-      device = "//192.168.1.100/games";
-      fsType = "cifs";
-      options = let
+    device = "//192.168.1.100/games";
+    fsType = "cifs";
+    options =
+      let
         # this line prevents hanging on network split
         automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+      in
+      [ "${automount_opts},credentials=/etc/nixos/smb-secrets,uid=1000,gid=100,dir_mode=0777,file_mode=0777" ];
+  };
 
+  # Nextcloud WebDAV
+  services.davfs2.enable = true;
       in ["${automount_opts},credentials=/etc/nixos/smb-secrets,uid=1000,gid=100,dir_mode=0777,file_mode=0777"];
+  fileSystems."/mnt/nextcloud" = {
+    device = "https://nc.netpalm.tk/remote.php/dav/files/npalmer";
+    fsType = "davfs";
+    options =
+      let
+        # this line prevents hanging on network split
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+      in
+      [ "${automount_opts},uid=1000" ];
   };
 }

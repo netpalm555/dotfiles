@@ -1,4 +1,4 @@
-{ system, config, lib, pkgs, rust-overlay, ... }:
+{ system, config, lib, pkgs, ... }:
 
 let
   inherit (pkgs.vscode-utils) extensionsFromVscodeMarketplace;
@@ -118,12 +118,17 @@ in
       rust-bin.stable.latest.default
       qalculate-gtk
       htop
-      polymc
+      prismlauncher
       ark
+      kicad
+      cura
       (pkgs.nerdfonts.override {
         fonts = [ "Hasklig" "JetBrainsMono" ];
       })
     ];
+
+  home.file."jdks/openjdk8".source = pkgs.jdk8;
+  home.file."jdks/openjdk17".source = pkgs.jdk17;
 
   xdg.configFile."wezterm/" = {
     source = ../../configs/wezterm;

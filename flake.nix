@@ -2,7 +2,7 @@
   description = "Personal NixOS Flake Configuration";
 
   nixConfig = {
-    extra-substituters = [
+    trusted-substituters = [
       "https://cachix.cachix.org"
       "https://nix-community.cachix.org"
     ];
@@ -26,16 +26,19 @@
 
     # Rust Overlay
     rust-overlay.url = "github:oxalica/rust-overlay";
+
+    # Discord Overlay
+    discord-overlay.url = "github:InternetUnexplorer/discord-overlay";
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, rust-overlay, ... }:
+  outputs = inputs @ { self, nixpkgs, home-manager, rust-overlay, discord-overlay, ... }:
     let
       system = "x86_64-linux";
     in
     {
       homeConfigurations = (
         import ./profiles {
-          inherit system nixpkgs home-manager rust-overlay;
+          inherit system nixpkgs home-manager rust-overlay discord-overlay;
         }
       );
 
