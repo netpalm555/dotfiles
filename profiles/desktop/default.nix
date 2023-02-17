@@ -1,4 +1,4 @@
-{ system, config, lib, pkgs, ... }:
+{ system, config, lib, pkgs, pkgs-stable, ... }:
 
 let
   inherit (pkgs.vscode-utils) extensionsFromVscodeMarketplace;
@@ -100,12 +100,16 @@ in
     enable = true;
   };
 
+  programs.wezterm = {
+    enable = true;
+    package = pkgs-stable.wezterm;
+  };
+
   home.packages = with pkgs;
     [
       firefox
       discord
       google-chrome
-      wezterm
       plasma-browser-integration
       nixpkgs-fmt
       ripgrep
