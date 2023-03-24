@@ -127,7 +127,10 @@ in
   nixpkgs.config.allowUnfree = true;
 
   services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.opengl.enable = true;
+  hardware.opengl = {
+    enable = true;
+    driSupport32Bit = true;
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

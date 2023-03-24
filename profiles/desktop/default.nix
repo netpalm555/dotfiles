@@ -1,8 +1,5 @@
 { system, config, lib, pkgs, pkgs-stable, ... }:
 
-let
-  inherit (pkgs.vscode-utils) extensionsFromVscodeMarketplace;
-in
 {
   imports = [
     ../common.nix
@@ -63,26 +60,6 @@ in
       bindkey '^[[1;5C' forward-word                                  #
       bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
     '';
-  };
-
-  programs = {
-    vscode = {
-      enable = true;
-      extensions = with pkgs.vscode-extensions; [
-        eamodio.gitlens
-        jnoortheen.nix-ide
-        pkief.material-icon-theme
-        zhuangtongfa.material-theme
-        rust-lang.rust-analyzer
-      ] ++ extensionsFromVscodeMarketplace [
-        {
-          name = "lua";
-          publisher = "sumneko";
-          version = "3.2.5";
-          sha256 = "sha256-WL5MRKotTHxEjV1EdtdpVCKrHT3LoKLWJJn1IN7qyfo=";
-        }
-      ];
-    };
   };
 
   programs.fzf = {

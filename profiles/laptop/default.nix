@@ -65,26 +65,6 @@ in
     '';
   };
 
-  programs = {
-    vscode = {
-      enable = true;
-      extensions = with pkgs.vscode-extensions; [
-        eamodio.gitlens
-        jnoortheen.nix-ide
-        pkief.material-icon-theme
-        zhuangtongfa.material-theme
-        rust-lang.rust-analyzer
-      ] ++ extensionsFromVscodeMarketplace [
-        {
-          name = "lua";
-          publisher = "sumneko";
-          version = "3.2.5";
-          sha256 = "sha256-hCmIRlo1lf+cNlldY7feLvJ3P14c+uICHgHgWr9neQE=";
-        }
-      ];
-    };
-  };
-
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;

@@ -2,11 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-
+{ config, pkgs, lib, ... }:
+let
+  proton-ge-custom = pkgs.callPackage ../../packages/proton-ge-custom { };
+in
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
@@ -32,6 +35,10 @@
 
     # Use network manager for networking
     networkmanager.enable = true;
+
+    firewall = {
+      checkReversePath = false; 
+    };
   };
 
   # Set your time zone.
@@ -124,7 +131,10 @@
   nixpkgs.config.allowUnfree = true;
 
   services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.opengl.enable = true;
+  hardware.opengl = {
+    enable = true;
+    driSupport32Bit = true;
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -149,16 +159,47 @@
   };
 
   # Games SMB Share
-  fileSystems."/home/npalmer/.local/share/Steam/games" = {
-    device = "//192.168.1.100/games";
-    fsType = "cifs";
-    options =
-      let
-        # this line prevents hanging on network split
-        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-      in
-      [ "${automount_opts},credentials=/etc/nixos/smb-secrets,uid=1000,gid=100,dir_mode=0777,file_mode=0777" ];
+  # fileSystems."/opt/games_share" = {
+  #   device = "//192.168.1.100/games";
+  #   fsType = "cifs";
+  #   options =
+  #     let
+  #       # this line prevents hanging on network split
+  #       automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,nofail,_netdev";
+  #     in
+  #     [ "${automount_opts},credentials=/etc/nixos/smb-secrets,rw,user,users,auto,exec,uid=npalmer,gid=100" ];
+  # };
+  services.rpcbind.enable = true;
+
+  environment.systemPackages = with pkgs; [ nfs-utils proton-ge-custom ];
+
+  environment.sessionVariables = {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = lib.makeBinPath [ proton-ge-custom ];
   };
+
+
+
+  boot.initrd = {
+    supportedFilesystems = [ "nfs" ];
+    kernelModules = [ "nfs" ];
+  };
+
+  systemd.mounts = [{
+    type = "nfs";
+    mountConfig = {
+      Options = "noatime";
+    };
+    what = "192.168.1.100:/mnt/user/games";
+    where = "/opt/games_share";
+  }];
+
+  systemd.automounts = [{
+    wantedBy = [ "multi-user.target" ];
+    automountConfig = {
+      TimeoutIdleSec = "600";
+    };
+    where = "/opt/games_share";
+  }];
 
   # Nextcloud WebDAV
   services.davfs2.enable = true;
