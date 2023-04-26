@@ -191,6 +191,10 @@ in
     kernelModules = [ "nfs" ];
   };
 
+  boot.extraModprobeConfig = ''
+    options nfs nfs4_disable_idmapping=0
+  '';
+
   systemd.mounts = [{
     type = "nfs";
     mountConfig = {
@@ -209,7 +213,7 @@ in
   }];
 
   # Nextcloud WebDAV
-  services.davfs2.enable = true;
+  services.davfs2.enable = true;  
   fileSystems."/mnt/nextcloud" = {
     device = "https://nc.netpalm.tk/remote.php/dav/files/npalmer";
     fsType = "davfs";
