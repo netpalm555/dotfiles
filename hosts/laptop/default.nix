@@ -89,6 +89,7 @@ in
     jack.enable = true;
   };
 
+  programs.zsh.enable = true;
   # User Accounts
   users = {
     # Set default shell to ZSH
