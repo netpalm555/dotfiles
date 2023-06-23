@@ -14,6 +14,7 @@ in
     # ZSH Shell
     zsh = {
       # Enable ZSH
+      enable = true;
       autocd = true;
       enableCompletion = true;
       enableAutosuggestions = true;
