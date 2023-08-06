@@ -99,6 +99,7 @@ in
         zhuangtongfa.material-theme
         rust-lang.rust-analyzer
         asciidoctor.asciidoctor-vscode
+        tamasfe.even-better-toml
         sumneko.lua
       ] ++ extensionsFromVscodeMarketplace [
       ];
