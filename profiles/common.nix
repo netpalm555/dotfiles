@@ -7,6 +7,9 @@ in
   # Enable using fonts specified by Home-Manager
   fonts.fontconfig.enable = true;
 
+  # Enable Wayland support for Electronc applications
+  home.sessionVariables.NIXOS_OZONE_WL = "1";
+
   programs = {
     # Enable Home-Manager
     home-manager.enable = true;
@@ -92,6 +95,9 @@ in
     # Code editor with a bunch of extensions
     vscode = {
       enable = true;
+      enableExtensionUpdateCheck = false;
+      enableUpdateCheck = false;
+      mutableExtensionsDir = false;
       extensions = with pkgs.vscode-extensions; [
         eamodio.gitlens
         jnoortheen.nix-ide
@@ -103,6 +109,17 @@ in
         sumneko.lua
       ] ++ extensionsFromVscodeMarketplace [
       ];
+      userSettings = {
+        "window.titleBarStyle" = "custom";
+        "workbench.colorTheme" = "One Dark Pro Mix";
+      };
+    };
+
+    # Nicer ls alternative
+    eza = {
+      enable = true;
+      enableAliases = true;
+      icons = true;
     };
   };
 
@@ -119,7 +136,6 @@ in
       git
       ferdium
       lutris
-      exa
       zellij
       rust-bin.stable.latest.default
       qalculate-gtk
@@ -129,6 +145,9 @@ in
       kicad
       cura
       heroic
+      libreoffice-qt
+      webcord
+      armcord
       (pkgs.nerdfonts.override {
         fonts = [ "Hasklig" "JetBrainsMono" ];
       })

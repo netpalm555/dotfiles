@@ -126,13 +126,31 @@ in
     '';
   };
 
-  # Allow unfree packages
+  # Allow unfree packages (for nvidia drivers)
   nixpkgs.config.allowUnfree = true;
 
+  # Set vidio driver to nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
+  
+  # Enable OpenGL for graphics
   hardware.opengl = {
     enable = true;
+    driSupport = true;
     driSupport32Bit = true;
+  };
+
+  # Enable setting necessary to get wayland working with Nvidia
+  hardware.nvidia = {
+
+    # Modesetting is needed for most wayland compositors
+    modesetting.enable = true;
+
+    # Use the open source version of the kernel module
+    # Only available on driver 515.43.04+
+    open = true;
+
+    # Enable the nvidia settings menu
+    nvidiaSettings = true;
   };
 
   # This value determines the NixOS release from which the default
@@ -174,6 +192,7 @@ in
 
   environment.sessionVariables = {
     STEAM_EXTRA_COMPAT_TOOLS_PATHS = lib.makeBinPath [ proton-ge-custom ];
+    NIXOS_OZONE_WL = "1";
   };
 
   services.xrdp.enable = true;
