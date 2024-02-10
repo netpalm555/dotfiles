@@ -61,8 +61,10 @@ in
     enable = true;
 
     # Set X11 keymap
+    xkb = {
     layout = "us";
-    xkbVariant = "";
+      variant = "";
+    };
 
     # Enable KDE Plasma Desktop Enviornment
     displayManager.sddm.enable = true;

@@ -18,9 +18,6 @@
     # Use NixOS Unstable as the base
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # Alternative NixOS Stable for broken packages
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-22.11";
-
     # Use Home-Manger for dotfiles
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -34,14 +31,14 @@
     discord-overlay.url = "github:InternetUnexplorer/discord-overlay";
   };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, rust-overlay, discord-overlay, ... }:
+  outputs = inputs @ { self, nixpkgs, home-manager, rust-overlay, discord-overlay, ... }:
     let
       system = "x86_64-linux";
     in
     {
       homeConfigurations = (
         import ./profiles {
-          inherit system nixpkgs nixpkgs-stable home-manager rust-overlay discord-overlay;
+          inherit system nixpkgs home-manager rust-overlay discord-overlay;
         }
       );
 

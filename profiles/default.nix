@@ -1,4 +1,4 @@
-{ system, nixpkgs, nixpkgs-stable, home-manager, rust-overlay, discord-overlay, ... }:
+{ system, nixpkgs, home-manager, rust-overlay, discord-overlay, ... }:
 
 let
   username = "npalmer";
@@ -6,17 +6,6 @@ let
   configHome = "${homeDirectory}/.config";
 
   pkgs = import nixpkgs {
-    inherit system;
-    overlays = [
-      discord-overlay.overlay
-      rust-overlay.overlays.default
-    ];
-
-    config.allowUnfree = true;
-    configs.xdg.configHome = configHome;
-  };
-
-  pkgs-stable = import nixpkgs-stable {
     inherit system;
     overlays = [
       discord-overlay.overlay
@@ -44,12 +33,12 @@ let
   );
 
   desktopConf = import ./desktop {
-    inherit system pkgs pkgs-stable;
+    inherit system pkgs;
     inherit (pkgs) config lib stdenv;
   };
 
   laptopConf = import ./laptop {
-    inherit system pkgs pkgs-stable;
+    inherit system pkgs;
     inherit (pkgs) config lib stdenv;
   };
 in
