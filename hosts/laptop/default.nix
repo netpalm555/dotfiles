@@ -71,7 +71,7 @@ in
     # Enable KDE Plasma Desktop Enviornment
     displayManager.sddm.enable = true;
     displayManager.sddm.autoNumlock = true;
-    desktopManager.plasma5.enable = true;
+    desktopManager.plasma6.enable = true;
   };
 
   # Enable CUPS to print documents.

@@ -20,7 +20,7 @@ in
       enable = true;
       autocd = true;
       enableCompletion = true;
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
       defaultKeymap = "emacs";
 
       history = {
@@ -118,7 +118,6 @@ in
     # Nicer ls alternative
     eza = {
       enable = true;
-      enableAliases = true;
       icons = true;
     };
   };
@@ -148,6 +147,7 @@ in
       libreoffice-qt
       webcord
       armcord
+      cascadia-code
       (pkgs.nerdfonts.override {
         fonts = [ "Hasklig" "JetBrainsMono" ];
       })

@@ -1,6 +1,6 @@
 local wezterm = require 'wezterm';
 
 return {
-  font = wezterm.font("JetBrains Mono"),
-  enable_wayland = false,
+  font = wezterm.font("Cascadia Code NF Regular"),
+  enable_wayland = true,
 }

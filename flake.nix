@@ -24,6 +24,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Cosmic
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Rust Overlay
     rust-overlay.url = "github:oxalica/rust-overlay";
 
@@ -31,7 +37,7 @@
     discord-overlay.url = "github:InternetUnexplorer/discord-overlay";
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, rust-overlay, discord-overlay, ... }:
+  outputs = inputs @ { self, nixpkgs, home-manager, nixos-cosmic, rust-overlay, discord-overlay, ... }:
     let
       system = "x86_64-linux";
     in
@@ -44,7 +50,7 @@
 
       nixosConfigurations = (
         import ./hosts {
-          inherit nixpkgs inputs system;
+          inherit nixpkgs inputs system nixos-cosmic;
         }
       );
     };

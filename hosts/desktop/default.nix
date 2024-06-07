@@ -56,7 +56,8 @@ in
   };
 
   # GUI Setup
-  services.xserver = {
+  services = {
+    xserver = {
     # Enable X11 windowing system
     enable = true;
 
@@ -64,12 +65,15 @@ in
     xkb = {
     layout = "us";
       variant = "";
+      };
     };
 
     # Enable KDE Plasma Desktop Enviornment
+    # displayManager.cosmic-greeter.enable = true;
     displayManager.sddm.enable = true;
     displayManager.sddm.autoNumlock = true;
-    desktopManager.plasma5.enable = true;
+    desktopManager.plasma6.enable = true;
+    desktopManager.cosmic.enable = true;
   };
 
   # Enable CUPS to print documents.
