@@ -141,7 +141,6 @@ in
       htop
       prismlauncher
       ark
-      kicad
       cura
       heroic
       libreoffice-qt
