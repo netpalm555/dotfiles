@@ -9,6 +9,7 @@ in
 
   # Enable Wayland support for Electronc applications
   home.sessionVariables.NIXOS_OZONE_WL = "1";
+  home.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
 
   programs = {
     # Enable Home-Manager
@@ -136,12 +137,10 @@ in
       ferdium
       lutris
       zellij
-      rust-bin.stable.latest.default
       qalculate-gtk
       htop
       prismlauncher
       ark
-      cura
       heroic
       libreoffice-qt
       webcord
@@ -154,6 +153,7 @@ in
 
   home.file."jdks/openjdk8".source = pkgs.jdk8;
   home.file."jdks/openjdk17".source = pkgs.jdk17;
+  home.file."jdks/openjdk21".source = pkgs.jdk21;
 
   xdg.configFile."wezterm/" = {
     source = ../configs/wezterm;

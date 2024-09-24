@@ -62,7 +62,6 @@ in
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -120,11 +119,10 @@ in
   # Set vidio driver to nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
 
-  # Enable OpenGL for graphics
-  hardware.opengl = {
+  # Enable graphics acceleration
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
   };
 
   # Set a higher DPI so everything isn't quite so large
