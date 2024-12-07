@@ -119,7 +119,7 @@ in
     # Nicer ls alternative
     eza = {
       enable = true;
-      icons = true;
+      icons = "auto";
     };
   };
 
@@ -144,7 +144,7 @@ in
       heroic
       libreoffice-qt
       webcord
-      armcord
+      legcord
       cascadia-code
       (pkgs.nerdfonts.override {
         fonts = [ "Hasklig" "JetBrainsMono" ];
