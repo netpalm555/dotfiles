@@ -146,9 +146,8 @@ in
       webcord
       legcord
       cascadia-code
-      (pkgs.nerdfonts.override {
-        fonts = [ "Hasklig" "JetBrainsMono" ];
-      })
+      nerd-fonts.hasklug
+      nerd-fonts.jetbrains-mono
     ];
 
   home.file."jdks/openjdk8".source = pkgs.jdk8;
