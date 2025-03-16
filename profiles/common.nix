@@ -96,23 +96,25 @@ in
     # Code editor with a bunch of extensions
     vscode = {
       enable = true;
-      enableExtensionUpdateCheck = false;
-      enableUpdateCheck = false;
       mutableExtensionsDir = false;
-      extensions = with pkgs.vscode-extensions; [
-        eamodio.gitlens
-        jnoortheen.nix-ide
-        pkief.material-icon-theme
-        zhuangtongfa.material-theme
-        rust-lang.rust-analyzer
-        asciidoctor.asciidoctor-vscode
-        tamasfe.even-better-toml
-        sumneko.lua
-      ] ++ extensionsFromVscodeMarketplace [
-      ];
-      userSettings = {
-        "window.titleBarStyle" = "custom";
-        "workbench.colorTheme" = "One Dark Pro Mix";
+      profiles.default = {
+        enableExtensionUpdateCheck = false;
+        enableUpdateCheck = false;
+        extensions = with pkgs.vscode-extensions; [
+          eamodio.gitlens
+          jnoortheen.nix-ide
+          pkief.material-icon-theme
+          zhuangtongfa.material-theme
+          rust-lang.rust-analyzer
+          asciidoctor.asciidoctor-vscode
+          tamasfe.even-better-toml
+          sumneko.lua
+        ] ++ extensionsFromVscodeMarketplace [
+        ];
+        userSettings = {
+          "window.titleBarStyle" = "custom";
+          "workbench.colorTheme" = "One Dark Pro Mix";
+        };
       };
     };
 
@@ -126,28 +128,29 @@ in
   # Packages that don't require extra configuration
   home.packages = with pkgs;
     [
-      firefox
-      discord
-      google-chrome
-      plasma-browser-integration
-      nixpkgs-fmt
-      ripgrep
-      zsh-powerlevel10k
-      git
-      ferdium
-      lutris
-      zellij
-      qalculate-gtk
-      htop
-      prismlauncher
-      ark
-      heroic
-      libreoffice-qt
-      webcord
-      legcord
+      kdePackages.ark
       cascadia-code
+      discord
+      ferdium
+      firefox
+      freecad-wayland
+      git
+      google-chrome
+      heroic
+      htop
+      legcord
+      libreoffice-qt
+      lutris
       nerd-fonts.hasklug
       nerd-fonts.jetbrains-mono
+      nixpkgs-fmt
+      kdePackages.plasma-browser-integration
+      prismlauncher
+      qalculate-gtk
+      ripgrep
+      webcord
+      zellij
+      zsh-powerlevel10k
     ];
 
   home.file."jdks/openjdk8".source = pkgs.jdk8;
