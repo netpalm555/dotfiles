@@ -9,7 +9,7 @@ in
 
   # Enable Wayland support for Electronc applications
   home.sessionVariables.NIXOS_OZONE_WL = "1";
-  home.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
+  # home.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
 
   programs = {
     # Enable Home-Manager
@@ -131,13 +131,14 @@ in
       kdePackages.ark
       cascadia-code
       discord
+      esphome
       ferdium
       firefox
-      freecad-wayland
       git
       google-chrome
       heroic
       htop
+      joplin-desktop
       legcord
       libreoffice-qt
       lutris
@@ -152,6 +153,8 @@ in
       zellij
       zsh-powerlevel10k
     ];
+  # Currently Disabled:
+  # (freecad-wayland.override { ifcSupport = true; })
 
   home.file."jdks/openjdk8".source = pkgs.jdk8;
   home.file."jdks/openjdk17".source = pkgs.jdk17;

@@ -89,7 +89,7 @@ in
       description = "Nathan Palmer";
 
       # Allow to change network settings and use sudo
-      extraGroups = [ "networkmanager" "wheel" "davfs2" ];
+      extraGroups = [ "networkmanager" "wheel" "davfs2" "dialout"];
     };
   };
 
@@ -98,6 +98,8 @@ in
     settings = {
       # Optimise syslinks
       auto-optimise-store = true;
+      # Add wheel users to trusted-users list
+      trusted-users = ["root" "@wheel"];
     };
     gc = {
       # Automatic garbage collection
